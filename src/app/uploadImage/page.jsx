@@ -1,17 +1,30 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import FileUpload from '@/components/FileUpload';
 import axios from 'axios';
 
 export default function UploadPage() {
   const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const fileUploadRef = useRef(null);
 
-  const handleUpload = async (file) => {
+  const handleUpload = async (file, compressionOptions = {}) => {
     try {
       setLoading(true);
 
       const formData = new FormData();
       formData.append('file', file);
+      
+      // Add compression options to the form data
+      if (compressionOptions.mode) {
+        formData.append('compressionMode', compressionOptions.mode);
+      }
+      if (compressionOptions.level) {
+        formData.append('compressionLevel', compressionOptions.level);
+      }
+      if (compressionOptions.targetSize) {
+        formData.append('targetSize', compressionOptions.targetSize.toString());
+      }
 
       const response = await axios.post('/uploadImage/api/compress/image', formData, {
         responseType: 'blob', // ❗ Important to handle binary data
@@ -37,24 +50,59 @@ export default function UploadPage() {
       a.href = url;
       a.download = `compressed-${file.name.split('.')[0]}.${extension}`;
       a.click();
+      
+      // Clean up the URL object to free memory
+      URL.revokeObjectURL(url);
+      
+      // Reset the FileUpload component to initial state
+      if (fileUploadRef.current) {
+        fileUploadRef.current.resetToInitialState();
+      }
+      
+      // Show success message
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000); // Hide after 3 seconds
     } catch (error) {
       console.error('❌ Compression error:', error);
       alert('Something went wrong. Please try again.');
     } finally {
       setLoading(false);
-      // Clean up the URL object to free memory
-      if (file) {
-        URL.revokeObjectURL(file);
-      }
-      
     }
   };
 
   return (
     <main className="max-w-xl mx-auto mt-10 px-4">
-      <h1 className="text-2xl font-bold mb-4">Image Compressor</h1>
-      <FileUpload onUpload={handleUpload} />
-      {loading && <p className="mt-4 text-gray-500">Compressing...</p>}
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-blue-700 mb-2">Image Compressor</h1>
+        <p className="text-gray-600">Reduce image file size while maintaining quality</p>
+      </div>
+      
+      <FileUpload ref={fileUploadRef} onUpload={handleUpload} loading={loading} />
+      
+      {/* Success Message */}
+      {showSuccess && (
+        <div className="mt-6 text-center">
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <div className="flex items-center justify-center space-x-3">
+              <div className="text-green-500 text-2xl">✓</div>
+              <p className="text-green-600 font-medium">Image compressed and downloaded successfully!</p>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">You can upload another image</p>
+          </div>
+        </div>
+      )}
+      
+      {loading && (
+        <div className="mt-6 text-center">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-center justify-center space-x-3">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+              <p className="text-blue-600 font-medium">Compressing your image...</p>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">This may take a few seconds</p>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

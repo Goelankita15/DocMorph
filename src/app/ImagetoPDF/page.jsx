@@ -54,13 +54,14 @@ export default function ImagetoPDF() {
       alert('Failed to convert images. Check console for details.');
     } finally {
       setLoading(false);
-    //  clean up preview 
-        setFiles([]);
-        setPreviews([]);
-      // Clean up the URL object to free memory
-        if (files.length > 0) {
-            files.forEach((file) => URL.revokeObjectURL(file));
-        }
+      // Clean up preview URLs
+      previews.forEach((url) => URL.revokeObjectURL(url));
+      setFiles([]);
+      setPreviews([]);
+      // Clean up the PDF blob URL
+      if (url) {
+        URL.revokeObjectURL(url);
+      }
     }
   };
 
