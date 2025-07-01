@@ -1,35 +1,37 @@
+import Link from 'next/link';
+
 export default function HomePage() {
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-0">
       {/* Hero Section */}
-      <div className="text-center mb-16">
-        <h1 className="text-5xl font-bold text-gray-900 mb-6">
+      <div className="text-center mb-12 lg:mb-16">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 lg:mb-6">
           Professional File Processing Suite
         </h1>
         
-        <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-8">
+        <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-6 lg:mb-8 px-4">
           Streamline your workflow with our comprehensive collection of file optimization tools. 
           <span className="font-semibold text-indigo-600"> Secure, fast, and completely free.</span>
         </p>
         
-        <div className="flex flex-wrap justify-center gap-4">
-          <div className="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg text-sm font-medium">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+          <div className="px-3 py-2 sm:px-4 bg-indigo-100 text-indigo-700 rounded-lg text-xs sm:text-sm font-medium">
             Privacy Focused
           </div>
-          <div className="px-4 py-2 bg-green-100 text-green-700 rounded-lg text-sm font-medium">
+          <div className="px-3 py-2 sm:px-4 bg-green-100 text-green-700 rounded-lg text-xs sm:text-sm font-medium">
             Client-side Processing
           </div>
-          <div className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium">
-            No File Upload Required
+          <div className="px-3 py-2 sm:px-4 bg-blue-100 text-blue-700 rounded-lg text-xs sm:text-sm font-medium">
+            Fast Results
           </div>
-          <div className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm font-medium">
+          <div className="px-3 py-2 sm:px-4 bg-purple-100 text-purple-700 rounded-lg text-xs sm:text-sm font-medium">
             Always Free
           </div>
         </div>
       </div>
 
       {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 lg:mb-16">
         {[
           {
             title: 'Image Compression',
@@ -104,40 +106,45 @@ export default function HomePage() {
             bgColor: 'bg-gray-50'
           }
         ].map((feature, index) => (
-          <div
+          <Link
             key={index}
-            className={`${feature.bgColor} rounded-lg p-6 professional-card cursor-pointer`}
+            href={feature.href}
+            className={feature.href === '#' ? 'cursor-default' : 'cursor-pointer'}
           >
-            <div className="text-center">
-              <div className={`inline-flex items-center justify-center w-12 h-12 ${feature.color} mb-4`}>
-                {feature.icon}
+            <div
+              className={`${feature.bgColor} rounded-lg p-4 sm:p-6 professional-card hover:shadow-lg transition-all duration-300 ${feature.href !== '#' ? 'hover:scale-105' : ''}`}
+            >
+              <div className="text-center">
+                <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 ${feature.color} mb-3 sm:mb-4`}>
+                  {feature.icon}
+                </div>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+                  {feature.description}
+                </p>
+                {feature.href !== '#' && (
+                  <span className="text-indigo-600 hover:text-indigo-700 font-medium text-xs sm:text-sm transition-colors">
+                    Get Started →
+                  </span>
+                )}
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                {feature.description}
-              </p>
-              {feature.href !== '#' && (
-                <button className="text-indigo-600 hover:text-indigo-700 font-medium text-sm transition-colors">
-                  Get Started →
-                </button>
-              )}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
       {/* Stats Section */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-16">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 lg:p-8 mb-12 lg:mb-16">
+        <div className="text-center mb-6 lg:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 lg:mb-4">
             Why Choose Our Platform?
           </h2>
-          <p className="text-gray-600">Built with modern web technologies for optimal performance</p>
+          <p className="text-gray-600 text-sm sm:text-base">Built with modern web technologies for optimal performance</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
           {[
             { number: '100%', label: 'Free to Use', icon: '✓' },
             { number: '0', label: 'Files Stored', icon: '🔒' },
@@ -145,14 +152,14 @@ export default function HomePage() {
             { number: 'Unlimited', label: 'Usage', icon: '∞' }
           ].map((stat, index) => (
             <div key={index} className="text-center">
-              <div className="text-2xl mb-2">{stat.icon}</div>
-              <div className="text-2xl font-bold text-indigo-600 mb-1">{stat.number}</div>
-              <div className="text-sm text-gray-500">{stat.label}</div>
+              <div className="text-xl sm:text-2xl mb-2">{stat.icon}</div>
+              <div className="text-lg sm:text-2xl font-bold text-indigo-600 mb-1">{stat.number}</div>
+              <div className="text-xs sm:text-sm text-gray-500">{stat.label}</div>
             </div>
           ))}
         </div>
         
-        <div className="text-center mt-6">
+        <div className="text-center mt-4 lg:mt-6">
           <p className="text-xs text-gray-400">
             All processing happens locally in your browser. No files are uploaded to our servers.
           </p>
@@ -161,14 +168,14 @@ export default function HomePage() {
 
       {/* Getting Started */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Get Started?</h2>
-        <p className="text-gray-600 mb-8">Select a tool from the sidebar to begin processing your files.</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 lg:mb-4">Ready to Get Started?</h2>
+        <p className="text-gray-600 mb-6 lg:mb-8 text-sm sm:text-base">Select a tool from the sidebar to begin processing your files.</p>
         
-        <div className="flex flex-wrap justify-center gap-4">
-          <button className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-all duration-200">
+        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+          <button className="px-4 sm:px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-all duration-200 text-sm sm:text-base">
             Compress Images
           </button>
-          <button className="px-6 py-3 bg-white border border-gray-300 hover:border-gray-400 text-gray-700 rounded-lg font-medium transition-all duration-200">
+          <button className="px-4 sm:px-6 py-3 bg-white border border-gray-300 hover:border-gray-400 text-gray-700 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base">
             Optimize PDFs
           </button>
         </div>

@@ -114,9 +114,9 @@ const FileUpload = forwardRef(({ onUpload, loading = false }, ref) => {
   , [preview]);
 
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="max-w-xl mx-auto px-4">
       <div 
-        className={`flex flex-col items-center justify-center border-2 border-dashed rounded-3xl px-8 py-16 cursor-pointer transition-all duration-500 ease-in-out relative overflow-hidden ${
+        className={`flex flex-col items-center justify-center border-2 border-dashed rounded-3xl px-4 sm:px-8 py-8 sm:py-16 cursor-pointer transition-all duration-500 ease-in-out relative overflow-hidden ${
           loading 
             ? 'border-gray-300 bg-gray-50 cursor-not-allowed opacity-50'
             : isDragging 
@@ -208,7 +208,7 @@ const FileUpload = forwardRef(({ onUpload, loading = false }, ref) => {
               <img
                 src={preview}
                 alt="Preview"
-                className="max-w-xs mx-auto transition-all duration-500 hover:scale-110"
+                className="w-full max-w-xs mx-auto transition-all duration-500 hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <button
@@ -242,10 +242,10 @@ const FileUpload = forwardRef(({ onUpload, loading = false }, ref) => {
             {/* Compression Mode */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Compression Mode</label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button
                   onClick={() => setCompressionMode('quality')}
-                  className={`p-3 rounded-lg border-2 transition-all ${
+                  className={`p-2 sm:p-3 rounded-lg border-2 transition-all text-sm ${
                     compressionMode === 'quality'
                       ? 'border-blue-500 bg-blue-100 text-blue-700'
                       : 'border-gray-300 bg-white text-gray-700 hover:border-blue-300'
@@ -256,7 +256,7 @@ const FileUpload = forwardRef(({ onUpload, loading = false }, ref) => {
                 </button>
                 <button
                   onClick={() => setCompressionMode('size')}
-                  className={`p-3 rounded-lg border-2 transition-all ${
+                  className={`p-2 sm:p-3 rounded-lg border-2 transition-all text-sm ${
                     compressionMode === 'size'
                       ? 'border-blue-500 bg-blue-100 text-blue-700'
                       : 'border-gray-300 bg-white text-gray-700 hover:border-blue-300'
@@ -272,7 +272,7 @@ const FileUpload = forwardRef(({ onUpload, loading = false }, ref) => {
             {compressionMode === 'quality' && (
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">Compression Level</label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 sm:gap-2">
                   {[
                     { value: 'low', label: 'Low', desc: 'Best quality' },
                     { value: 'medium', label: 'Medium', desc: 'Balanced' },
@@ -281,13 +281,13 @@ const FileUpload = forwardRef(({ onUpload, loading = false }, ref) => {
                     <button
                       key={level.value}
                       onClick={() => setCompressionLevel(level.value)}
-                      className={`p-2 rounded-lg border-2 transition-all ${
+                      className={`p-2 rounded-lg border-2 transition-all text-xs sm:text-sm ${
                         compressionLevel === level.value
                           ? 'border-blue-500 bg-blue-100 text-blue-700'
                           : 'border-gray-300 bg-white text-gray-700 hover:border-blue-300'
                       }`}
                     >
-                      <div className="font-medium text-sm">{level.label}</div>
+                      <div className="font-medium text-xs sm:text-sm">{level.label}</div>
                       <div className="text-xs">{level.desc}</div>
                     </button>
                   ))}

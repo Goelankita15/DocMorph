@@ -45,22 +45,22 @@ const ImageToPdf = ({ files, setFiles, previews, setPreviews, onConvert, loading
   }, []); // only run on unmount
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 space-y-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-0">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 lg:p-8 space-y-6 lg:space-y-8">
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-12 h-12 bg-indigo-600 rounded-lg mb-4">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
             Convert Images to PDF
           </h1>
-          <p className="text-lg text-gray-600">Transform your images into a professional PDF document</p>
+          <p className="text-base sm:text-lg text-gray-600">Transform your images into a professional PDF document</p>
         </div>
 
         <div 
-          className={`border-2 border-dashed rounded-lg px-8 py-12 text-center cursor-pointer transition-all duration-300 ${
+          className={`border-2 border-dashed rounded-lg px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12 text-center cursor-pointer transition-all duration-300 ${
             loading 
               ? 'border-gray-300 bg-gray-50 cursor-not-allowed opacity-50'
               : 'border-gray-300 hover:border-indigo-400 bg-gray-50 hover:bg-indigo-50'
@@ -147,7 +147,7 @@ const ImageToPdf = ({ files, setFiles, previews, setPreviews, onConvert, loading
                 Review your images before conversion. Images will appear in this order in the PDF.
               </p>
               
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 scrollable max-h-64 overflow-y-auto">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 scrollable max-h-64 overflow-y-auto">
                 {previews.map((url, i) => (
                   <div key={i} className="relative group bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
                     <img

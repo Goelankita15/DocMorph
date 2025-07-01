@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useState } from 'react';
+import React from 'react';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 const navLinks = [
   { 
@@ -69,34 +70,87 @@ const navLinks = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOpen } = useSidebar();
 
   return (
     <>
-      {/* Mobile backdrop */}
-      <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40" />
-      
-      {/* Sidebar */}
-      <aside className={`${isCollapsed ? 'w-16' : 'w-72'} h-screen fixed left-0 top-0 bg-white shadow-lg transition-all duration-300 ease-in-out z-50 border-r border-gray-200`}>
+      {/* Mobile navbar */}
+      <nav className="lg:hidden fixed top-0 left-0 right-0 z-50 mobile-navbar border-b border-gray-200 shadow-sm">
+        <div className="flex items-center justify-between px-4 py-3">
+          {/* Logo */}
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">C</span>
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-gray-900">Compressify</h2>
+            </div>
+          </div>
+          
+          {/* Mobile menu button */}
+          <button
+            className="p-2 rounded-lg bg-gray-100 text-gray-600 hover:text-gray-900"
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+        
+        {/* Mobile dropdown menu */}
+        {isMobileOpen && (
+          <div className="bg-white border-t border-gray-200 shadow-lg slide-down mobile-navbar-dropdown">
+            <div className="px-4 py-2 space-y-1">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMobileOpen(false)}
+                    className={`flex items-center px-3 py-3 rounded-lg font-medium transition-all duration-200 ${
+                      isActive
+                        ? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-600'
+                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    }`}
+                  >
+                    <span className="mr-3 flex-shrink-0">
+                      {link.icon}
+                    </span>
+                    <div className="flex-1">
+                      <div className="font-medium">{link.label}</div>
+                      <div className="text-xs text-gray-500">{link.description}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Desktop sidebar */}
+      <aside className={`hidden lg:block ${
+        isCollapsed ? 'w-16' : 'w-72'
+      } h-screen fixed left-0 top-0 bg-white shadow-xl transition-all duration-300 ease-in-out border-r border-gray-200 z-30 overflow-y-auto`}>
         {/* Header */}
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            {!isCollapsed && (
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">C</span>
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900">
-                    Compressify
-                  </h2>
-                  <p className="text-sm text-gray-500">File Utility Suite</p>
-                </div>
+            <div className={`flex items-center space-x-3 ${isCollapsed ? 'hidden' : ''}`}>
+              <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">C</span>
               </div>
-            )}
+              <div>
+                <h2 className="text-xl font-bold text-gray-900">
+                  Compressify
+                </h2>
+                <p className="text-sm text-gray-500">File Utility Suite</p>
+              </div>
+            </div>
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-all duration-200"
+              className="flex p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-all duration-200"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isCollapsed ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
@@ -125,12 +179,10 @@ export default function Sidebar() {
                 </span>
                 
                 {/* Label and description */}
-                {!isCollapsed && (
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium truncate">{link.label}</div>
-                    <div className="text-xs text-gray-500 truncate">{link.description}</div>
-                  </div>
-                )}
+                <div className={`flex-1 min-w-0 ${isCollapsed ? 'hidden' : ''}`}>
+                  <div className="font-medium truncate">{link.label}</div>
+                  <div className="text-xs text-gray-500 truncate">{link.description}</div>
+                </div>
                 
                 {/* Collapse mode tooltip */}
                 {isCollapsed && (
@@ -144,16 +196,14 @@ export default function Sidebar() {
         </nav>
 
         {/* Footer */}
-        {!isCollapsed && (
-          <div className="absolute bottom-6 left-4 right-4">
-            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <div className="text-center">
-                <div className="text-gray-600 text-sm font-medium mb-1">Made with care</div>
-                <div className="text-gray-500 text-xs">Open Source & Free</div>
-              </div>
+        <div className={`absolute bottom-6 left-4 right-4 ${isCollapsed ? 'hidden' : ''}`}>
+          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <div className="text-center">
+              <div className="text-gray-600 text-sm font-medium mb-1">Made with care</div>
+              <div className="text-gray-500 text-xs">Open Source & Free</div>
             </div>
           </div>
-        )}
+        </div>
       </aside>
     </>
   );

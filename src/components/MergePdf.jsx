@@ -60,22 +60,22 @@ const MergePdf = ({ files, setFiles, previews, setPreviews, loading, onMerge }) 
    
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 space-y-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-0">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 lg:p-8 space-y-6 lg:space-y-8">
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-12 h-12 bg-indigo-600 rounded-lg mb-4">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
             Merge PDF Files
           </h1>
-          <p className="text-lg text-gray-600">Combine multiple PDF files into a single document</p>
+          <p className="text-base sm:text-lg text-gray-600">Combine multiple PDF files into a single document</p>
         </div>
 
         <div 
-          className={`border-2 border-dashed rounded-lg px-8 py-12 text-center cursor-pointer transition-all duration-300 ${
+          className={`border-2 border-dashed rounded-lg px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12 text-center cursor-pointer transition-all duration-300 ${
             loading 
               ? 'border-gray-300 bg-gray-50 cursor-not-allowed opacity-50'
               : 'border-gray-300 hover:border-indigo-400 bg-gray-50 hover:bg-indigo-50'

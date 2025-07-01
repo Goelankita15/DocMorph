@@ -79,14 +79,14 @@ const SplitPdf = ({
   }, [preview]);
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg space-y-6">
+    <div className="max-w-4xl mx-auto mt-4 sm:mt-6 lg:mt-10 p-4 sm:p-6 bg-white rounded-xl shadow-lg space-y-4 sm:space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-green-700 mb-2">Split PDF</h1>
-        <p className="text-gray-600">Extract a range of pages from your PDF document</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-green-700 mb-2">Split PDF</h1>
+        <p className="text-gray-600 text-sm sm:text-base">Extract a range of pages from your PDF document</p>
       </div>
 
       <div 
-        className={`flex flex-col items-center justify-center border-2 border-dashed rounded-xl px-6 py-12 cursor-pointer transition-all duration-300 ease-in-out ${
+        className={`flex flex-col items-center justify-center border-2 border-dashed rounded-xl px-4 sm:px-6 py-8 sm:py-10 lg:py-12 cursor-pointer transition-all duration-300 ease-in-out ${
           loading 
             ? 'border-gray-300 bg-gray-50 cursor-not-allowed opacity-50'
             : isDragging 
@@ -156,7 +156,7 @@ const SplitPdf = ({
             </button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
             {/* PDF Preview */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-green-700">PDF Preview</h3>

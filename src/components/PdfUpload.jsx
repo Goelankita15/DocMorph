@@ -112,9 +112,9 @@ const PdfUpload = forwardRef(({ onUpload, loading = false }, ref) => {
   }, [preview]);
 
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="max-w-xl mx-auto px-4">
       <div 
-        className={`flex flex-col items-center justify-center border-2 border-dashed rounded-2xl px-6 py-12 cursor-pointer transition-all duration-300 ease-in-out ${
+        className={`flex flex-col items-center justify-center border-2 border-dashed rounded-2xl px-4 sm:px-6 py-8 sm:py-12 cursor-pointer transition-all duration-300 ease-in-out ${
           loading 
             ? 'border-gray-300 bg-gray-50 cursor-not-allowed opacity-50'
             : isDragging 
@@ -217,10 +217,10 @@ const PdfUpload = forwardRef(({ onUpload, loading = false }, ref) => {
             {/* Compression Mode */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Compression Mode</label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button
                   onClick={() => setCompressionMode('quality')}
-                  className={`p-3 rounded-lg border-2 transition-all ${
+                  className={`p-2 sm:p-3 rounded-lg border-2 transition-all text-sm ${
                     compressionMode === 'quality'
                       ? 'border-red-500 bg-red-100 text-red-700'
                       : 'border-gray-300 bg-white text-gray-700 hover:border-red-300'
@@ -231,7 +231,7 @@ const PdfUpload = forwardRef(({ onUpload, loading = false }, ref) => {
                 </button>
                 <button
                   onClick={() => setCompressionMode('size')}
-                  className={`p-3 rounded-lg border-2 transition-all ${
+                  className={`p-2 sm:p-3 rounded-lg border-2 transition-all text-sm ${
                     compressionMode === 'size'
                       ? 'border-red-500 bg-red-100 text-red-700'
                       : 'border-gray-300 bg-white text-gray-700 hover:border-red-300'
@@ -247,7 +247,7 @@ const PdfUpload = forwardRef(({ onUpload, loading = false }, ref) => {
             {compressionMode === 'quality' && (
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">Compression Level</label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 sm:gap-2">
                   {[
                     { value: 'low', label: 'Low', desc: 'Best quality' },
                     { value: 'medium', label: 'Medium', desc: 'Balanced' },
