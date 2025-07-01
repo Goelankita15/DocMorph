@@ -10,10 +10,6 @@ const SplitPdf = ({
   endPage,
   setStartPage,
   setEndPage,
-  splitMode,
-  setSplitMode,
-  pageNumbers,
-  setPageNumbers,
   loading,
   onSplit
 }) => {
@@ -71,7 +67,6 @@ const SplitPdf = ({
     setPreview(null);
     setStartPage('');
     setEndPage('');
-    setPageNumbers('');
   };
 
   // Clean up preview on unmount
@@ -87,7 +82,7 @@ const SplitPdf = ({
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg space-y-6">
       <div className="text-center">
         <h1 className="text-3xl font-bold text-green-700 mb-2">Split PDF</h1>
-        <p className="text-gray-600">Extract specific pages or ranges from your PDF document</p>
+        <p className="text-gray-600">Extract a range of pages from your PDF document</p>
       </div>
 
       <div 
@@ -190,95 +185,44 @@ const SplitPdf = ({
 
             {/* Split Options */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-green-700">Split Options</h3>
+              <h3 className="text-lg font-semibold text-green-700">Page Range</h3>
               
-              {/* Split Mode Selection */}
-              <div className="space-y-3">
-                <label className="block text-sm font-medium text-gray-700">Split Mode</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => setSplitMode('range')}
-                    className={`p-3 rounded-lg border-2 transition-all ${
-                      splitMode === 'range'
-                        ? 'border-green-500 bg-green-100 text-green-700'
-                        : 'border-gray-300 bg-white text-gray-700 hover:border-green-300'
-                    }`}
-                  >
-                    <div className="font-medium">Page Range</div>
-                    <div className="text-xs">Split by start and end page</div>
-                  </button>
-                  <button
-                    onClick={() => setSplitMode('pages')}
-                    className={`p-3 rounded-lg border-2 transition-all ${
-                      splitMode === 'pages'
-                        ? 'border-green-500 bg-green-100 text-green-700'
-                        : 'border-gray-300 bg-white text-gray-700 hover:border-green-300'
-                    }`}
-                  >
-                    <div className="font-medium">Specific Pages</div>
-                    <div className="text-xs">List individual pages</div>
-                  </button>
-                </div>
-              </div>
-
               {/* Page Range Input */}
-              {splitMode === 'range' && (
-                <div className="space-y-3">
-                  <label className="block text-sm font-medium text-gray-700">Page Range</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs text-gray-500 mb-1">Start Page</label>
-                      <input
-                        type="number"
-                        placeholder="1"
-                        value={startPage}
-                        min={1}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        onChange={(e) => setStartPage(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs text-gray-500 mb-1">End Page</label>
-                      <input
-                        type="number"
-                        placeholder="10"
-                        value={endPage}
-                        min={startPage || 1}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                        onChange={(e) => setEndPage(e.target.value)}
-                      />
-                    </div>
+              <div className="space-y-3">
+                <label className="block text-sm font-medium text-gray-700">Specify Page Range</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">Start Page</label>
+                    <input
+                      type="number"
+                      placeholder="1"
+                      value={startPage}
+                      min={1}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      onChange={(e) => setStartPage(e.target.value)}
+                    />
                   </div>
-                  <p className="text-xs text-gray-500">
-                    Extract pages from {startPage || '1'} to {endPage || 'end'}
-                  </p>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">End Page</label>
+                    <input
+                      type="number"
+                      placeholder="10"
+                      value={endPage}
+                      min={startPage || 1}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      onChange={(e) => setEndPage(e.target.value)}
+                    />
+                  </div>
                 </div>
-              )}
-
-              {/* Specific Pages Input */}
-              {splitMode === 'pages' && (
-                <div className="space-y-3">
-                  <label className="block text-sm font-medium text-gray-700">Specific Pages</label>
-                  <input
-                    type="text"
-                    placeholder="e.g., 1,3,5-7,10"
-                    value={pageNumbers}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    onChange={(e) => setPageNumbers(e.target.value)}
-                  />
-                  <p className="text-xs text-gray-500">
-                    Enter page numbers separated by commas. Use dash for ranges (e.g., 1,3,5-7,10)
-                  </p>
-                </div>
-              )}
+                <p className="text-xs text-gray-500">
+                  Extract pages from {startPage || '1'} to {endPage || 'end'}
+                </p>
+              </div>
 
               {/* Split Button */}
               <button
                 onClick={onSplit}
-                disabled={loading || 
-                  (splitMode === 'range' && (!startPage || !endPage || +startPage > +endPage)) || 
-                  (splitMode === 'pages' && !pageNumbers.trim())
-                }
+                disabled={loading || !startPage || !endPage || +startPage > +endPage}
                 className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-green-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium shadow-lg"
               >
                 {loading ? (
@@ -287,10 +231,7 @@ const SplitPdf = ({
                     <span>Splitting PDF...</span>
                   </div>
                 ) : (
-                  `Split PDF ${splitMode === 'range' 
-                    ? `(Pages ${startPage || '?'}-${endPage || '?'})` 
-                    : `(${pageNumbers.trim() ? pageNumbers.split(',').length + ' pages' : 'Select pages'})`
-                  }`
+                  `Split PDF (Pages ${startPage || '?'}-${endPage || '?'})`
                 )}
               </button>
             </div>

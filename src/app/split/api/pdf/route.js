@@ -38,56 +38,26 @@ async function parseForm(request) {
 export async function POST(req) {
   try {
     const { fields, files } = await parseForm(req);
+    const startPage = parseInt(fields.startPage[0]);
+    const endPage = parseInt(fields.endPage[0]);
     const pdfFile = files.file[0];
-    
-    // Check if we have splitMode and pageNumbers (specific pages mode)
-    const splitMode = fields.splitMode ? fields.splitMode[0] : 'range';
-    const pageNumbers = fields.pageNumbers ? fields.pageNumbers[0] : null;
-    const startPage = fields.startPage ? parseInt(fields.startPage[0]) : null;
-    const endPage = fields.endPage ? parseInt(fields.endPage[0]) : null;
+
+    if (!startPage || !endPage || startPage > endPage) {
+      return NextResponse.json({ error: 'Invalid page range' }, { status: 400 });
+    }
 
     const originalPdfBytes = await fs.readFile(pdfFile.filepath);
     const originalPdf = await PDFDocument.load(originalPdfBytes);
     const totalPages = originalPdf.getPageCount();
 
-    let pagesToExtract = [];
-
-    if (splitMode === 'specific' && pageNumbers) {
-      // Parse specific page numbers (e.g., "1,3,5" or "1, 3, 5")
-      try {
-        pagesToExtract = pageNumbers
-          .split(',')
-          .map(p => parseInt(p.trim()))
-          .filter(p => p >= 1 && p <= totalPages)
-          .sort((a, b) => a - b);
-        
-        if (pagesToExtract.length === 0) {
-          return NextResponse.json({ error: 'No valid page numbers provided' }, { status: 400 });
-        }
-      } catch (error) {
-        return NextResponse.json({ error: 'Invalid page numbers format' }, { status: 400 });
-      }
-    } else {
-      // Range mode
-      if (!startPage || !endPage || startPage > endPage) {
-        return NextResponse.json({ error: 'Invalid page range' }, { status: 400 });
-      }
-
-      if (startPage < 1 || endPage > totalPages) {
-        return NextResponse.json({ error: 'Page range out of bounds' }, { status: 400 });
-      }
-
-      // Create array of pages in range
-      for (let i = startPage; i <= endPage; i++) {
-        pagesToExtract.push(i);
-      }
+    if (startPage < 1 || endPage > totalPages) {
+      return NextResponse.json({ error: 'Page range out of bounds' }, { status: 400 });
     }
 
     const newPdf = await PDFDocument.create();
 
-    // Extract the specified pages (convert to 0-based index)
-    for (const pageNum of pagesToExtract) {
-      const [copiedPage] = await newPdf.copyPages(originalPdf, [pageNum - 1]);
+    for (let i = startPage - 1; i < endPage; i++) {
+      const [copiedPage] = await newPdf.copyPages(originalPdf, [i]);
       newPdf.addPage(copiedPage);
     }
 

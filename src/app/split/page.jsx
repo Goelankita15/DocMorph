@@ -8,8 +8,6 @@ export default function SplitPdfPage() {
   const [preview, setPreview] = useState(null);
   const [startPage, setStartPage] = useState('');
   const [endPage, setEndPage] = useState('');
-  const [splitMode, setSplitMode] = useState('range');
-  const [pageNumbers, setPageNumbers] = useState('');
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -19,29 +17,16 @@ export default function SplitPdfPage() {
       return;
     }
 
-    // Validate inputs based on split mode
-    if (splitMode === 'range') {
-      if (!startPage || !endPage || +startPage > +endPage) {
-        alert('Please enter a valid page range.');
-        return;
-      }
-    } else if (splitMode === 'pages') {
-      if (!pageNumbers.trim()) {
-        alert('Please enter specific page numbers.');
-        return;
-      }
+    // Validate page range
+    if (!startPage || !endPage || +startPage > +endPage) {
+      alert('Please enter a valid page range.');
+      return;
     }
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('splitMode', splitMode);
-    
-    if (splitMode === 'range') {
-      formData.append('startPage', startPage);
-      formData.append('endPage', endPage);
-    } else {
-      formData.append('pageNumbers', pageNumbers);
-    }
+    formData.append('startPage', startPage);
+    formData.append('endPage', endPage);
 
     try {
       setLoading(true);
@@ -71,7 +56,6 @@ export default function SplitPdfPage() {
       setPreview(null);
       setStartPage('');
       setEndPage('');
-      setPageNumbers('');
       
       // Show success message
       setShowSuccess(true);
@@ -95,10 +79,6 @@ export default function SplitPdfPage() {
         endPage={endPage}
         setStartPage={setStartPage}
         setEndPage={setEndPage}
-        splitMode={splitMode}
-        setSplitMode={setSplitMode}
-        pageNumbers={pageNumbers}
-        setPageNumbers={setPageNumbers}
         loading={loading}
         onSplit={handleSplit}
       />

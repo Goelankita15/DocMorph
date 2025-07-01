@@ -1,9 +1,7 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 const ImageToPdf = ({ files, setFiles, previews, setPreviews, onConvert, loading }) => {
-  const [isDragging, setIsDragging] = useState(false);
-
   const processFiles = (fileList) => {
     const selectedFiles = Array.from(fileList).filter((f) =>
       ['image/jpeg', 'image/jpg', 'image/png'].includes(f.type)
@@ -25,32 +23,6 @@ const ImageToPdf = ({ files, setFiles, previews, setPreviews, onConvert, loading
       processFiles(e.target.files);
       // Reset the input value to allow selecting the same files again
       e.target.value = '';
-    }
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Only set isDragging to false if we're leaving the drop zone itself
-    if (!e.currentTarget.contains(e.relatedTarget)) {
-      setIsDragging(false);
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    
-    const droppedFiles = e.dataTransfer.files;
-    if (droppedFiles.length > 0) {
-      processFiles(droppedFiles);
     }
   };
 
@@ -91,13 +63,8 @@ const ImageToPdf = ({ files, setFiles, previews, setPreviews, onConvert, loading
           className={`border-2 border-dashed rounded-lg px-8 py-12 text-center cursor-pointer transition-all duration-300 ${
             loading 
               ? 'border-gray-300 bg-gray-50 cursor-not-allowed opacity-50'
-              : isDragging 
-                ? 'border-indigo-500 bg-indigo-50' 
-                : 'border-gray-300 hover:border-indigo-400 bg-gray-50 hover:bg-indigo-50'
+              : 'border-gray-300 hover:border-indigo-400 bg-gray-50 hover:bg-indigo-50'
           }`}
-          onDragOver={!loading ? handleDragOver : undefined}
-          onDragLeave={!loading ? handleDragLeave : undefined}
-          onDrop={!loading ? handleDrop : undefined}
           onClick={!loading ? () => document.getElementById('fileInput').click() : undefined}
         >
           <input
@@ -132,10 +99,10 @@ const ImageToPdf = ({ files, setFiles, previews, setPreviews, onConvert, loading
                 </svg>
                 <div>
                   <p className="text-lg font-medium text-gray-900 mb-2">
-                    {isDragging ? 'Drop your images here' : 'Upload images to convert'}
+                    Upload images to convert
                   </p>
                   <p className="text-sm text-gray-500">
-                    Click to browse or drag and drop multiple image files
+                    Click to browse and select multiple image files
                   </p>
                   <p className="text-xs text-gray-400 mt-2">
                     Supports JPG, JPEG, PNG • Maximum 10MB per file

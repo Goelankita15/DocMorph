@@ -1,9 +1,7 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 const MergePdf = ({ files, setFiles, previews, setPreviews, loading, onMerge }) => {
-  const [isDragging, setIsDragging] = useState(false);
-
   const processFiles = (fileList) => {
     const selectedFiles = Array.from(fileList).filter(
       (f) => f.type === 'application/pdf'
@@ -25,32 +23,6 @@ const MergePdf = ({ files, setFiles, previews, setPreviews, loading, onMerge }) 
       processFiles(e.target.files);
       // Reset the input value to allow selecting the same files again
       e.target.value = '';
-    }
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Only set isDragging to false if we're leaving the drop zone itself
-    if (!e.currentTarget.contains(e.relatedTarget)) {
-      setIsDragging(false);
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    
-    const droppedFiles = e.dataTransfer.files;
-    if (droppedFiles.length > 0) {
-      processFiles(droppedFiles);
     }
   };
 
@@ -106,13 +78,8 @@ const MergePdf = ({ files, setFiles, previews, setPreviews, loading, onMerge }) 
           className={`border-2 border-dashed rounded-lg px-8 py-12 text-center cursor-pointer transition-all duration-300 ${
             loading 
               ? 'border-gray-300 bg-gray-50 cursor-not-allowed opacity-50'
-              : isDragging 
-                ? 'border-indigo-500 bg-indigo-50' 
-                : 'border-gray-300 hover:border-indigo-400 bg-gray-50 hover:bg-indigo-50'
+              : 'border-gray-300 hover:border-indigo-400 bg-gray-50 hover:bg-indigo-50'
           }`}
-          onDragOver={!loading ? handleDragOver : undefined}
-          onDragLeave={!loading ? handleDragLeave : undefined}
-          onDrop={!loading ? handleDrop : undefined}
           onClick={!loading ? () => document.getElementById('mergeFileInput').click() : undefined}
         >
           <input
@@ -147,10 +114,10 @@ const MergePdf = ({ files, setFiles, previews, setPreviews, loading, onMerge }) 
                 </svg>
                 <div>
                   <p className="text-lg font-medium text-gray-900 mb-2">
-                    {isDragging ? 'Drop your PDF files here' : 'Upload PDF files to merge'}
+                    Upload PDF files to merge
                   </p>
                   <p className="text-sm text-gray-500">
-                    Click to browse or drag and drop multiple PDF files
+                    Click to browse and select multiple PDF files
                   </p>
                   <p className="text-xs text-gray-400 mt-2">
                     Minimum 2 files required • Maximum 50MB per file
