@@ -41,7 +41,7 @@ Convert multiple images into professional PDF documents with customizable layout
 
 Clone the repo:  
 ```bash
-git clone https://github.com/your-username/docmorph.git
+git clone https://github.com/Goelankita15/docmorph.git
 cd docmorph
 ```
 
