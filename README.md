@@ -29,10 +29,10 @@ Convert multiple images into professional PDF documents with customizable layout
 
 ## 🛠️ Tech Stack  
 - **Frontend**: React.js / Next.js + Tailwind CSS  
-- **Backend**: Node.js + Express.js  
-- **Database**: MongoDB (for file metadata & tracking)  
+- **Backend**: Node.js
 - **Libraries**:  
-  - [pdf-lib](https://pdf-lib.js.org/) → PDF editing (merge, split, rotate, etc.)  
+  - [pdf-lib](https://pdf-lib.js.org/) → PDF editing (merge, split, rotate, etc.)
+  - [sharp-lib] for compressing images and pdfs.
   - Compression utilities for image & PDF optimization  
 
 ---
