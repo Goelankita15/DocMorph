@@ -1,6 +1,6 @@
 # 📄 DocMorph  
 
-DocMorph is a **document transformation and management platform** that makes working with PDFs and other files seamless. It provides an intuitive interface to **convert, compress, merge, split, and edit documents**, helping users handle files effortlessly in one place.  
+DocMorph is a **document transformation and image transformation platform** that makes working with PDFs and other files seamless. It provides an intuitive interface to **convert, compress, merge, split documents**, helping users handle files effortlessly in one place.  
 
 ---
 
