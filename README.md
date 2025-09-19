@@ -43,3 +43,10 @@ Clone the repo:
 ```bash
 git clone https://github.com/your-username/docmorph.git
 cd docmorph
+```
+
+Get Started
+```bash
+npm install
+npm run dev
+
