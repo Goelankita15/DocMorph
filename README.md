@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📄 DocMorph  
 
-## Getting Started
+DocMorph is a **document transformation and management platform** that makes working with PDFs and other files seamless. It provides an intuitive interface to **convert, compress, merge, split, and edit documents**, helping users handle files effortlessly in one place.  
 
-First, run the development server:
+---
 
+## 🚀 Features  
+
+### 🖼️ Image Compression  
+Reduce image file sizes while maintaining visual quality using advanced compression algorithms.  
+![Image Compression](./assets/features/image-compression.png)  
+
+### 📑 PDF Optimization  
+Optimize PDF files for web and storage with intelligent size reduction while preserving quality.  
+![PDF Optimization](./assets/features/pdf-optimization.png)  
+
+### ✂️ PDF Splitting  
+Extract specific pages or ranges from PDF documents with precision control.  
+![PDF Splitting](./assets/features/pdf-splitting.png)  
+
+### 📚 PDF Merging  
+Combine multiple PDF files into a single document with custom ordering.  
+![PDF Merging](./assets/features/pdf-merging.png)  
+
+### 🖼️➡️📑 Image to PDF  
+Convert multiple images into professional PDF documents with customizable layouts.  
+![Image to PDF](./assets/features/image-to-pdf.png)  
+
+### ⚙️ Coming Soon  
+We are continuously working on new features to enhance your file processing workflow.  
+![Coming Soon](./assets/features/coming-soon.png)  
+
+---
+
+## 🛠️ Tech Stack  
+- **Frontend**: React.js / Next.js + Tailwind CSS  
+- **Backend**: Node.js + Express.js  
+- **Database**: MongoDB (for file metadata & tracking)  
+- **Libraries**:  
+  - [pdf-lib](https://pdf-lib.js.org/) → PDF editing (merge, split, rotate, etc.)  
+  - [Multer](https://github.com/expressjs/multer) → File uploads  
+  - Compression utilities for image & PDF optimization  
+
+---
+
+## 📥 Installation  
+
+Clone the repo:  
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/your-username/docmorph.git
+cd docmorph
